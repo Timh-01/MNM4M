@@ -353,7 +353,8 @@ class WorkflowSettings:
         self.to_integrate: list[str] = self.select_used_tools(available_tools=available_integrations,setting="integrate_tools")
 
         #Let tools set additional settings and then check if all requirements are met
-        self.set_tool_settings(set(self.to_run+self.to_integrate))
+        # self.set_tool_settings(set(self.to_run+self.to_integrate))
+        self.set_tool_settings(set(self.to_run))
         self.check_tool_requirements(tools=self.to_run,goal="running")
         self.check_tool_requirements(tools=self.to_integrate,goal="integration")
 
