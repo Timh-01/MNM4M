@@ -1,8 +1,11 @@
 {"paths":{
-    "base_output_folder":"path/myfolder",
-    "internal_settings":"path/internal_settings.json",
-    "name":"my workflow run",
-    "input_mgf":"path/mzmine_iimn_fbmn.mgf",
+    "base_output_folder":"mypath/myfolder",
+    "internal_settings":"mypath/internal_settings.json",
+    "name":"Run 1",
+    "input_mgf":"mypath/mzmine_iimn_fbmn.mgf",
+    "csi:fingerid_output":"path/structure_identifications.tsv",
+    "canopus_output":"mypath/canopus_structure_summary.tsv",
+    "sirius_tool_output":"mypath/formula_identifications.tsv"
     },
 "run_tools":{
     "sirius": "False",
@@ -17,7 +20,7 @@
     "toxtree": "False",
     "classyfire": "True",
     "ms2lda": "False",
-    "mzmine": "True",
+    "mzmine": "False",
     "matchms": "True",
     "plastchemdb": "False"
 },

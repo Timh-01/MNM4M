@@ -353,8 +353,7 @@ class WorkflowSettings:
         self.to_integrate: list[str] = self.select_used_tools(available_tools=available_integrations,setting="integrate_tools")
 
         #Let tools set additional settings and then check if all requirements are met
-        # self.set_tool_settings(set(self.to_run+self.to_integrate))
-        self.set_tool_settings(set(self.to_run))
+        self.set_tool_settings(set(self.to_run+self.to_integrate))
         self.check_tool_requirements(tools=self.to_run,goal="running")
         self.check_tool_requirements(tools=self.to_integrate,goal="integration")
 
@@ -406,9 +405,11 @@ class WorkflowSettings:
                 case "toxtree":
                     self.toxtree = tool_settings
                     self.paths["toxtree_output"] = f"{self.output_folder}/toxtree_results.csv"
+                    print("warning: classyfire requires SMILES to be in the dataframe, currently checks for that are not implemented")
                 case "classyfire":
                     self.classyfire = tool_settings
                     self.paths["classyfire_output"] = f"{self.output_folder}/classyfire_results.sdf"
+                    print("warning: classyfire requires SMILES to be in the dataframe, currently checks for that are not implemented")
                 case "ms2lda":
                     self.ms2lda = tool_settings
                     ms2lda_loc = f"{self.output_folder}/ms2lda"
