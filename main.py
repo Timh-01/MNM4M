@@ -482,94 +482,9 @@ settings_path: str = "/lustre/BIF/nobackup/hendr218/mycode/src/myworkflow/settin
 # # # workflow_holder: list[WorkflowRunner] = [WorkflowRunner(dataset,settings) for dataset,settings in workflow_dict.items()]
 # # # for workflow in workflow_holder:
 # # #     workflow.run_all()
-# test_workflow = WorkflowRunner(settings_path)
-# test_workflow.run_all()
+test_workflow = WorkflowRunner(settings_path)
+test_workflow.run_all()
 # loc = f"{test_workflow.output_folder}/{test_workflow.name}.pickle"
 # with open(loc,"wb") as file:
 #     pickle.dump(test_workflow,file)
 
-with open("/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/first_test.pickle","rb") as file:
-    wf = pickle.load(file)
-# # print('ah')
-
-
-def create_counts_df(df: pd.DataFrame,col_to_plot: str,col_to_filter:str=None,normalize:bool=True) -> pd.DataFrame:
-    """Creates a dataframe for"""
-    print(col_to_filter)
-    df = df[df[col_to_plot]!= "N/A"] 
-    if col_to_filter:
-        df = df[col_to_plot][(df[col_to_filter] == True) & (df["is_blank"] == False)].value_counts(normalize=normalize)
-    else: 
-        df = df[col_to_plot][df["is_blank"] == False].value_counts(normalize=normalize)
-    df=df.to_dict()
-    df = pd.DataFrame.from_dict(df,orient="index")
-    if col_to_filter is None:
-        return df.rename(columns={0:"All"})
-    return df.rename(columns={0:col_to_filter})
-
-def join_counts(*dataframes: Iterable[pd.DataFrame]):
-    if len(dataframes) == 1:
-        return dataframes
-    dfs = [dataframe for dataframe in dataframes]
-    df_joined = dfs.pop(0)
-    for i,df in enumerate(dfs):
-        df_joined = df_joined.join(df,how="outer") #lsuffix=f"_{i+1}",rsuffix=f"_{i+2}"
-    return df_joined.fillna(0)
-
-def df_to_barplot(df:pd.DataFrame,columns:list[str],title: str,ytitle:str,fn: str) -> None:
-    print(f"df to barplot: {columns}")
-    ax = df[columns].plot(kind='bar', title=title, figsize=(15, 10), legend=True, fontsize=12)
-    ax.set_ylabel(ytitle, fontsize=12)
-    plt.tight_layout()
-    plt.savefig(fn)
-
-
-def df_to_counts_plot(df:pd.DataFrame,filter_cols: list[str],vis_col: str,fn:str,title:str,relative_counts: bool = True,include_nofilter:bool=False) -> None:
-    count_dfs = [create_counts_df(df,vis_col,filter_col,normalize=relative_counts) for filter_col in filter_cols]
-    cols = filter_cols
-    print(f"df to counts plot:{cols} type: {type(cols)}")
-    if include_nofilter:
-        print(f" including nofilter")
-        count_dfs.append(create_counts_df(df,vis_col,normalize=relative_counts))
-        cols.append("All")
-    joined_df = join_counts(*count_dfs)
-    ytitle = "Feature count"
-    if relative_counts:
-        joined_df = joined_df.apply(lambda x: x*100)
-        ytitle = "occurence (%)"
-    print(f"df to counts plot:{cols}")
-    df_to_barplot(joined_df,columns=cols,title=title,ytitle=ytitle,fn=fn)
-
-def plot_classes(df,loc,relative_counts=True,filter_type="type",class_type="all"):
-    filter_dict = {
-        "type":["PE","PE_PET","PE_PA"],
-        "state":["Removed_by_dec","Introduced_by_dec","Kept_by_dec"]
-    } 
-    class_dict={
-        "canopus":["canopus:CF_subclass", "canopus:CF_class", "canopus:CF_superclass"],
-        "classyfire":["CF:subclass", "CF:class", "CF:superclass"],
-        "all":["subclass", "class", "superclass"]
-    }
-    vis_cols = class_dict[class_type]
-    filter_cols = filter_dict[filter_type]
-
-    counttype = "relative" if relative_counts else "absolute"
-    for vis_col in vis_cols:
-        print(F"vis col: {vis_col}")
-        fn = f"{loc}/{class_type}_classes_by_{filter_type}_{vis_col}_{counttype}_counts.png"
-        print(f"plot_classes pre all: {filter_cols}")
-        df_to_counts_plot(df,filter_cols,vis_col,fn=fn,title=vis_col,relative_counts=relative_counts)
-        fn = f"{fn[:-4]}_all.png"
-        print(f"plot_classes post all: {filter_cols}")
-        df_to_counts_plot(df,filter_cols,vis_col,fn=fn,title=vis_col,relative_counts=relative_counts,include_nofilter=True)
-    
-loc = "/lustre/BIF/nobackup/hendr218/Data/plot_tests"
-df = wf.network_df
-plot_classes(df,loc,relative_counts=True,filter_type="type",class_type="all")
-# for filter_type in ["type","state"]:
-#     for class_type in ["canopus","classyfire","all"]:
-#         plot_classes(df,loc,relative_counts=True,filter_type=filter_type,class_type=class_type)
-#         plot_classes(df,loc,relative_counts=False,filter_type=filter_type,class_type=class_type)
-#         plt.close()
-
-print('hi')
