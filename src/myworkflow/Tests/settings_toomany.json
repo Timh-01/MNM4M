@@ -1,0 +1,19 @@
+{"paths":{
+    "base_output_folder":"/lustre/BIF/nobackup/hendr218/Data/testrun_28-01",
+    "mzmine_location":"/lustre/BIF/nobackup/hendr218/Programs/MZMine/bin/mzmine",
+    "mzmine_userfile_location":"/lustre/BIF/nobackup/hendr218/Programs/MZMine/tim.mzuser"
+    },
+"run_tools":{
+    "sirius": "True",
+    "cramer": "True",
+    "classyfire": "True",
+    "ms2lda": "True",
+    "mzmine": "True"
+    },
+"other":{
+    "placeholder":"valuess"
+    },
+"another":{
+    "keyy":"vvalue"
+}
+}
