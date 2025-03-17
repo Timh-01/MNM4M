@@ -9,7 +9,7 @@
         "integration":{
                 "depth":"4",
                 "requirements":{
-                        "paths":["classyfire_output","sirius_output"]
+                        "paths":["classyfire_output"]
                         },
                 "translations":{
                         "merging":{"smiles": "smiles","inchi":"inchi"},
@@ -166,7 +166,7 @@
                 },
         "integration":{
                 "requirements":{
-                        "paths":["toxtree_output","sirius_output"],
+                        "paths":["toxtree_output"],
                         "settings": []
                         },
                 "translations":{
