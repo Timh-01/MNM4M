@@ -15,7 +15,7 @@ from typing import Any,Iterable
 import os.path
 import xml.etree.ElementTree as ET
 from pathlib import Path
-import MS2LDA
+# import MS2LDA temp to try V7
 from src.myworkflow.integrating import *
 from src.myworkflow.parsing import *
 # from src.myworkflow.visualisation import *
@@ -388,9 +388,9 @@ class WorkflowSettings:
                     self.sirius = tool_settings
                     sirius_loc = f'{self.output_folder}/sirius/'
                     Path(sirius_loc).mkdir(exist_ok=True)
-                    self.paths["canopus_output"] = f"{sirius_loc}canopus_structure_summary.tsv"
-                    self.paths["csi:fingerid_output"] = f"{sirius_loc}structure_identifications.tsv"
-                    self.paths["sirius_tool_output"] = f"{sirius_loc}formula_identifications.tsv"
+                    self.paths["canopus_output"] = self.paths.get("canopus_output",f"{sirius_loc}canopus_structure_summary.tsv")
+                    self.paths["csi:fingerid_output"] = self.paths.get("csi:fingerid_output",f"{sirius_loc}structure_identifications.tsv")
+                    self.paths["sirius_tool_output"] = self.paths.get("sirius_tool_output",f"{sirius_loc}formula_identifications.tsv")
                     self.paths["sirius_output"] = sirius_loc
                 case "sirius_db":
                     self.siriusdb = tool_settings
@@ -477,20 +477,20 @@ class WorkflowSettings:
 #         main()
 
 
-settings_path: str = "/lustre/BIF/nobackup/hendr218/mycode/src/myworkflow/settings_pcdb.json"
+settings_path: str = "/lustre/BIF/nobackup/hendr218/Data/test_first_settings/first_settings.json"
 # # # workflow_dict: dict[str,str] = {"A": settings_path,"B":settings_path}
 # # # workflow_holder: list[WorkflowRunner] = [WorkflowRunner(dataset,settings) for dataset,settings in workflow_dict.items()]
 # # # for workflow in workflow_holder:
 # # #     workflow.run_all()
-# test_workflow = WorkflowRunner(settings_path)
-# test_workflow.run_all()
+test_workflow = WorkflowRunner(settings_path)
+test_workflow.run_all()
 # loc = f"{test_workflow.output_folder}/{test_workflow.name}.pickle"
 # with open(loc,"wb") as file:
 #     pickle.dump(test_workflow,file)
 
-with open("/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/first_test.pickle","rb") as file:
-    wf = pickle.load(file)
-# # print('ah')
+# with open("/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/first_test.pickle","rb") as file:
+#     wf = pickle.load(file)
+# # # print('ah')
 
 
 def create_counts_df(df: pd.DataFrame,col_to_plot: str,col_to_filter:str=None,normalize:bool=True) -> pd.DataFrame:
@@ -563,13 +563,13 @@ def plot_classes(df,loc,relative_counts=True,filter_type="type",class_type="all"
         print(f"plot_classes post all: {filter_cols}")
         df_to_counts_plot(df,filter_cols,vis_col,fn=fn,title=vis_col,relative_counts=relative_counts,include_nofilter=True)
     
-loc = "/lustre/BIF/nobackup/hendr218/Data/plot_tests"
-df = wf.network_df
-plot_classes(df,loc,relative_counts=True,filter_type="type",class_type="all")
-# for filter_type in ["type","state"]:
-#     for class_type in ["canopus","classyfire","all"]:
-#         plot_classes(df,loc,relative_counts=True,filter_type=filter_type,class_type=class_type)
-#         plot_classes(df,loc,relative_counts=False,filter_type=filter_type,class_type=class_type)
-#         plt.close()
+# loc = "/lustre/BIF/nobackup/hendr218/Data/plot_tests"
+# df = wf.network_df
+# plot_classes(df,loc,relative_counts=True,filter_type="type",class_type="all")
+# # for filter_type in ["type","state"]:
+# #     for class_type in ["canopus","classyfire","all"]:
+# #         plot_classes(df,loc,relative_counts=True,filter_type=filter_type,class_type=class_type)
+# #         plot_classes(df,loc,relative_counts=False,filter_type=filter_type,class_type=class_type)
+# #         plt.close()
 
-print('hi')
+# print('hi')

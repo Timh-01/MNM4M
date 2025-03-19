@@ -15,7 +15,7 @@ from matchms.networking import SimilarityNetwork
 import pandas as pd
 from typing import Any,Iterable
 import rdkit.Chem.PandasTools
-import MS2LDA
+# import MS2LDA
 
 # def get_sirius_translators() -> tuple[dict,dict,dict]:
 #     """Provides alternative names for various columns from sirius results"""
