@@ -33,7 +33,10 @@ import rdkit.Chem
 import rdkit.Chem.PandasTools
 import matplotlib.pyplot as plt
 import itertools
-#import MS2LDA
+try:
+    import MS2LDA
+except ImportError:
+    MS2LDA = None
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -151,9 +154,10 @@ def run_sirius(input_path: str, output_path: str, sirius_path: str, **kwargs) ->
         True if function sucesfully ran, False otherwise
     
     """
-    config = "--FormulaSearchSettings.applyFormulaConstraintsToBottomUp=false --IsotopeSettings.filter=true --UseHeuristic.useOnlyHeuristicAboveMz=650 --FormulaSearchDB=plastchem --Timeout.secondsPerTree=0 --FormulaSettings.enforced=H,C,N,O,F,P,I --Timeout.secondsPerInstance=0 --AlgorithmProfile=qtof --SpectralMatchingMassDeviation.allowedPeakDeviation=10.0ppm --AdductSettings.ignoreDetectedAdducts=false --AdductSettings.enforced=, --AdductSettings.prioritizeInputFileAdducts=true --UseHeuristic.useHeuristicAboveMz=300 --IsotopeMs2Settings=IGNORE --MS2MassDeviation.allowedMassDeviation=10.0ppm --SpectralMatchingMassDeviation.allowedPrecursorDeviation=10.0ppm --FormulaSearchSettings.performDeNovoBelowMz=0 --FormulaSearchSettings.applyFormulaConstraintsToDatabaseCandidates=false --EnforceElGordoFormula=true --NumberOfCandidatesPerIonization=1 --FormulaSettings.detectable=B,S,Cl,Se,Br --NumberOfCandidates=10 --AdductSettings.fallback=[[M+H]+,[M+Na]+,[M+K]+] --FormulaSearchSettings.performBottomUpAboveMz=Infinity --RecomputeResults=false spectra-search"
+    #config = "--FormulaSearchSettings.applyFormulaConstraintsToBottomUp=false --IsotopeSettings.filter=true --UseHeuristic.useOnlyHeuristicAboveMz=650 --FormulaSearchDB=plastchem --Timeout.secondsPerTree=0 --FormulaSettings.enforced=H,C,N,O,F,P,I --Timeout.secondsPerInstance=0 --AlgorithmProfile=qtof --SpectralMatchingMassDeviation.allowedPeakDeviation=10.0ppm --AdductSettings.ignoreDetectedAdducts=false --AdductSettings.enforced=, --AdductSettings.prioritizeInputFileAdducts=true --UseHeuristic.useHeuristicAboveMz=300 --IsotopeMs2Settings=IGNORE --MS2MassDeviation.allowedMassDeviation=10.0ppm --SpectralMatchingMassDeviation.allowedPrecursorDeviation=10.0ppm --FormulaSearchSettings.performDeNovoBelowMz=0 --FormulaSearchSettings.applyFormulaConstraintsToDatabaseCandidates=false --EnforceElGordoFormula=true --NumberOfCandidatesPerIonization=1 --FormulaSettings.detectable=B,S,Cl,Se,Br --NumberOfCandidates=10 --AdductSettings.fallback=[[M+H]+,[M+Na]+,[M+K]+] --FormulaSearchSettings.performBottomUpAboveMz=Infinity --RecomputeResults=false spectra-search"
     instrument = kwargs["instrument"] if "instrument" in kwargs else "orbitrap"
-    subprocess_command = f"{sirius_path} --input {input_path} --output {output_path}.sirius config {config} formulas -p {instrument} fingerprints classes structures write-summaries"
+    # subprocess_command = f"{sirius_path} --input {input_path} --output {output_path}.sirius config {config} formulas -p {instrument} fingerprints classes structures write-summaries"
+    subprocess_command = f"{sirius_path} --input {input_path} --output '{output_path}.sirius' formulas fingerprints classes structures write-summaries"
     run_subprocess(subprocess_command)
     return True
 
