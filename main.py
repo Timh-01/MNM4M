@@ -13,6 +13,7 @@ import pickle
 from time import ctime
 from typing import Any,Iterable
 import os.path
+import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -150,7 +151,7 @@ class WorkflowRunner():
         # if row["library_smiles"]
         if not row.get("csifingerid:smiles"): 
             row["csifingerid:smiles"] = "N/A"
-        if row.get("CF"):
+        if row.get("csifingerid_db:smiles"):
             return row["csifingerid_db:smiles"] if isinstance(row["csifingerid_db:smiles"],str) else row["csifingerid:smiles"]
         else:
             return row["csifingerid:smiles"] 
@@ -478,8 +479,9 @@ class WorkflowSettings:
         for combination in required_optional_settings:
             if not validate_dictkeys(self.input.get(tool),combination):
                     raise Settingserror(f"Any of {combination} is required in {tool} settings")
-        if Any([failed_import in required_modules for failed_import in failed_imports]):           
-            raise Settingserror(f"all of {required_modules} required to run {tool}, but one is missing in imported modules")
+        for module in required_modules:
+            if not module in sys.modules:
+                raise Settingserror(f"all of {required_modules} required to run {tool}, but one is missing in imported modules")
 # test2 = [self.network_df[self.network_df["smiles"].notna()].merge(test[test["canonical_smiles"].notna()],)
 # target_df[target_df["Molecular formula"].notna()].merge(source_df[source_df["molecular_formula"].notna()],left_on="smiles",right_on="molecular_formula")
     def select_used_tools(self,available_tools: list,setting: str) -> list:
@@ -518,7 +520,7 @@ class WorkflowSettings:
 #         main()
 
 
-settings_path: str = "/lustre/BIF/nobackup/hendr218/Data/test_first_settings/first_settings.json"
+settings_path: str = "/lustre/BIF/nobackup/hendr218/mycode/src/myworkflow/settings_pcdb.json"
 # # # workflow_dict: dict[str,str] = {"A": settings_path,"B":settings_path}
 # # # workflow_holder: list[WorkflowRunner] = [WorkflowRunner(dataset,settings) for dataset,settings in workflow_dict.items()]
 # # # for workflow in workflow_holder:

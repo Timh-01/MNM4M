@@ -24,7 +24,10 @@
     "mzmine_base_batchfile":"/lustre/BIF/nobackup/hendr218/Data/testrun_06_02/input/009_noblanks.mzbatch",
     "toxtree_path":"/lustre/BIF/nobackup/hendr218/Programs/Toxtree/Toxtree-v3.1.0.1851/Toxtree/Toxtree-3.1.0.1851.jar",
     "sirius_path":"/lustre/BIF/nobackup/hendr218/Programs/sirius/bin/sirius",
-    "plastchem_path":"/lustre/BIF/nobackup/hendr218/Databases/PlastChem_db.tsv"
+    "plastchem_path":"/lustre/BIF/nobackup/hendr218/Databases/PlastChem_db.tsv",
+    "csi:fingerid_output":"/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/sirius/structure_identifications.tsv",
+    "canopus_output":"/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/sirius/canopus_structure_summary.tsv",
+    "sirius_tool_output":"/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/sirius/formula_identifications.tsv"
     },
 "run_tools":{
     "sirius": "False",
@@ -32,17 +35,17 @@
     "classyfire": "False",
     "ms2lda": "False",
     "mzmine": "False",
-    "matchms": "True"
+    "matchms": "False"
     },
 "integrate_tools":{
     "sirius": "True",
     "sirius_db":"True",
-    "toxtree": "True",
-    "classyfire": "True",
-    "ms2lda": "True",
-    "mzmine": "True",
-    "matchms": "True",
-    "plastchemdb": "True"
+    "toxtree": "False",
+    "classyfire": "TruFalsee",
+    "ms2lda": "False",
+    "mzmine": "False",
+    "matchms": "False",
+    "plastchemdb": "False"
 },
 "mzmine": {
 
