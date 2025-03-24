@@ -12,7 +12,7 @@
                 "/lustre/BIF/nobackup/hendr218/Data/complete/FS-120k-ddMS2_HCD_20-50_05_PE_Dec_pos02.mzML",
                 "/lustre/BIF/nobackup/hendr218/Data/complete/FS-120k-ddMS2_HCD_20-50_02_PE_PET_Dec_pos02.mzML"
                 ],
-    "input_mgf":"/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/mzmine/mzmine_iimn_fbmn.mgf",
+    "input_mgf":"/lustre/BIF/nobackup/hendr218/Data/pesticides.mgf",
     "sirius_mgf":"/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/mzmine/mzmine_sirius.mgf'",
     "quant_table":"/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/first_test/mzmine/mzmine_iimn_fbmn_quant_full.csv",
     "metadata_csv":"/lustre/BIF/nobackup/hendr218/Data/with_pcdb_copy/metadata_pos_17-02.csv",
@@ -32,17 +32,17 @@
     "classyfire": "False",
     "ms2lda": "False",
     "mzmine": "False",
-    "matchms": "False"
+    "matchms": "True"
     },
 "integrate_tools":{
     "sirius": "True",
     "sirius_db":"True",
-    "toxtree": "False",
+    "toxtree": "True",
     "classyfire": "True",
     "ms2lda": "True",
     "mzmine": "True",
     "matchms": "True",
-    "plastchemdb": "False"
+    "plastchemdb": "True"
 },
 "mzmine": {
 

@@ -43,6 +43,7 @@
         "depth":"2",
                 "requirements":{
                         "paths":["input_mgf"],
+                        "modules":["MS2LDA"],
                         "settings":["preprocessing_parameters","convergence_parameters","annotation_parameters",
                 "model_parameters","train_parameters","fingerprint_parameters","dataset_parameters",
                 "n_motifs","n_iterations","motif_parameter"]
@@ -51,7 +52,8 @@
         "integration":{
                 "depth":"4",
                 "requirements":{
-                        "paths":["ms2lda_results_db","ms2lda_output","input_mgf"]
+                        "paths":["ms2lda_results_db","ms2lda_output","input_mgf"],
+                        "modules":["MS2LDA"]
                         }
                 }       
         },

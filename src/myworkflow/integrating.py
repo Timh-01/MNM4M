@@ -15,7 +15,11 @@ from matchms.networking import SimilarityNetwork
 import pandas as pd
 from typing import Any,Iterable
 import rdkit.Chem.PandasTools
-# import MS2LDA
+
+try:
+    import MS2LDA
+except ImportError:
+     MS2LDA = None
 
 # def get_sirius_translators() -> tuple[dict,dict,dict]:
 #     """Provides alternative names for various columns from sirius results"""
@@ -141,7 +145,12 @@ def create_network_from_scores(scores: matchms.Scores ) -> nx.Graph:
     #scores: matchms.Scores = scores_from_pickle("/lustre/BIF/nobackup/hendr218/temp/scores_001")
     newscores = scores
     newscores.filter_by_range(name="ModifiedCosine_matches",low=6,below_operator="<")
-    ms_network = SimilarityNetwork(identifier_key="feature_id",score_cutoff=0.7,top_n=10,link_method="mutual")
+    if "scans" in newscores.queries[0].metadata:
+        ms_network = SimilarityNetwork(identifier_key="scans",score_cutoff=0.7,top_n=10,link_method="mutual")
+    elif "feature_id" in newscores.queries[0].metadata:
+         ms_network = SimilarityNetwork(identifier_key="feature_id",score_cutoff=0.7,top_n=10,link_method="mutual")
+    else:
+        raise ValueError("'Scans' or 'feature_id' required in mgf to identify features in network by other tools")
     ms_network.create_network(newscores,score_name="ModifiedCosine_score")
     return ms_network
 
