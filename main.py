@@ -482,8 +482,7 @@ class WorkflowSettings:
         for module in required_modules:
             if not module in sys.modules:
                 raise Settingserror(f"all of {required_modules} required to run {tool}, but one is missing in imported modules")
-# test2 = [self.network_df[self.network_df["smiles"].notna()].merge(test[test["canonical_smiles"].notna()],)
-# target_df[target_df["Molecular formula"].notna()].merge(source_df[source_df["molecular_formula"].notna()],left_on="smiles",right_on="molecular_formula")
+
     def select_used_tools(self,available_tools: list,setting: str) -> list:
         """Check which available tools were selected in settings file"""
         return [tool for tool in available_tools if self.input[setting].get(tool) == "True"]
@@ -502,23 +501,6 @@ class WorkflowSettings:
         motif_parameter = self.ms2lda["motif_parameter"]
 
         return preprocessing_parameters,convergence_parameters,annotation_parameters,model_parameters,train_parameters,fingerprint_parameters,dataset_parameters,n_iterations,n_motifs,motif_parameter
-
-# def main() -> None:
-#     """Run the workflow for chosen datasets and settings"""
-#     settings_path: str = "/lustre/BIF/nobackup/hendr218/mycode/src/myworkflow/settings_pcdb.json"
-#     #workflow_dict: dict[str,str] = {"A": settings_path,"B":settings_path}
-#     #workflow_holder: list[WorkflowRunner] = [WorkflowRunner(dataset,settings) for dataset,settings in workflow_dict.items()]
-#     #for workflow in workflow_holder:
-#         #workflow.run_all()
-#     test_workflow = WorkflowRunner(settings_path)
-#     test_workflow.run_all()
-#     loc = f"{test_workflow.output_folder}/{test_workflow.name}.pickle"
-#     with open(loc,"wb") as file:
-#         pickle.dump(test_workflow,file)
-    
-#     if __name__ == "__main__":
-#         main()
-
 
 settings_path: str = "/lustre/BIF/nobackup/hendr218/mycode/src/myworkflow/settings_pcdb.json"
 # # # workflow_dict: dict[str,str] = {"A": settings_path,"B":settings_path}
